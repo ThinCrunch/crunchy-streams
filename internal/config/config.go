@@ -2,14 +2,12 @@ package config
 
 import (
 	"log"
-	"os"
-	"path/filepath"
 )
 
 type Config struct {
 	CliOptions    *CliOptions
 	TwitchSecrets *TwitchSecrets
-	ConfigDir     string
+	FileOptions   *FileOptions
 }
 
 func Load() *Config {
@@ -18,14 +16,13 @@ func Load() *Config {
 		log.Fatal("Failed to load cli options: ", err)
 	}
 
-	configDir, err := os.UserConfigDir()
+	fileOpts, err := getFileOptions()
 	if err != nil {
 		if cliOpts.Command == "list" {
 			log.Fatal("Unable to access the configuration", err)
 		}
 		log.Println("Warning: Unable to access the configuration.", err)
 	}
-	configDir = filepath.Join(configDir, "crunchy-streams")
 
 	twitchSecrets, err := loadSecrets()
 	if err != nil {
@@ -35,6 +32,6 @@ func Load() *Config {
 	return &Config{
 		CliOptions:    cliOpts,
 		TwitchSecrets: twitchSecrets,
-		ConfigDir:     configDir,
+		FileOptions:   fileOpts,
 	}
 }

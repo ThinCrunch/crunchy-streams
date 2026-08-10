@@ -20,7 +20,7 @@ func printHelp() {
 func main() {
 	cfg := config.Load()
 	requestService := requests.NewService(*cfg.TwitchSecrets)
-	commandService := commands.NewCommandService(*requestService, *cfg.CliOptions, cfg.ConfigDir)
+	commandService := commands.NewCommandService(*requestService, *cfg.CliOptions, *cfg.FileOptions)
 
 	switch cfg.CliOptions.Command {
 	case "list":

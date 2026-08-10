@@ -18,16 +18,14 @@ var Player = "mpv"
 type CommandService struct {
 	requestService requests.Service
 	cliOptions     config.CliOptions
-	dataPath       string
-	dataFilePrefix string
+	fileOptions    config.FileOptions
 }
 
-func NewCommandService(requestService requests.Service, cliOptions config.CliOptions, configDir string) *CommandService {
+func NewCommandService(requestService requests.Service, cliOptions config.CliOptions, fileOptions config.FileOptions) *CommandService {
 	return &CommandService{
 		requestService: requestService,
 		cliOptions:     cliOptions,
-		dataPath:       configDir,
-		dataFilePrefix: "follows-",
+		fileOptions:    fileOptions,
 	}
 }
 
@@ -83,8 +81,8 @@ func (s *CommandService) getFollowedUsers() []string {
 }
 
 func (s *CommandService) getFollowsDataFilePath() string {
-	dataFileName := strings.Join([]string{s.dataFilePrefix, s.cliOptions.Group, ".txt"}, "")
-	return filepath.Join(s.dataPath, dataFileName)
+	dataFileName := strings.Join([]string{s.fileOptions.DataFilePrefix, s.cliOptions.Group, s.fileOptions.DataFileSuffix}, "")
+	return filepath.Join(s.fileOptions.ConfigDir, dataFileName)
 }
 
 func formatStreamInfo(name string, title string, game string, viewerCount int) string {
