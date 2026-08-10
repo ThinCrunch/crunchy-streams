@@ -20,7 +20,7 @@ func Load() *Config {
 
 	configDir, err := os.UserConfigDir()
 	if err != nil {
-		if cliOpts.Command == "list" || cliOpts.Command == "edit" {
+		if cliOpts.Command == "list" {
 			log.Fatal("Unable to access the configuration", err)
 		}
 		log.Println("Warning: Unable to access the configuration.", err)

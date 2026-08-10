@@ -11,7 +11,7 @@ import (
 )
 
 func printHelp() {
-	fmt.Println("Commands: list, watch, edit, token")
+	fmt.Println("Commands: list, watch, token")
 	fmt.Println("Options:")
 	flag.PrintDefaults()
 	fmt.Println("\nTo edit the groups of followed channels, edit the follows-GROUP.txt file in the config directory.")
@@ -28,8 +28,6 @@ func main() {
 		break
 	case "watch":
 		commandService.OpenStream()
-	case "edit":
-		commandService.EditFollows()
 	case "token":
 		answer := io.AskForString("Are you sure you want to generate a new token? [y/n]: ")
 		if answer != "y" && answer != "Y" {

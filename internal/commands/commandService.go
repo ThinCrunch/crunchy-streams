@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -90,18 +89,4 @@ func (s *CommandService) getFollowsDataFilePath() string {
 
 func formatStreamInfo(name string, title string, game string, viewerCount int) string {
 	return fmt.Sprintf("%s (%s, %d): %s", name, game, viewerCount, title)
-}
-
-func (s *CommandService) EditFollows() {
-	dataFilePath := s.getFollowsDataFilePath()
-
-	editor := os.Getenv("EDITOR")
-
-	cmd := exec.Command(editor, dataFilePath)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	err := cmd.Run()
-	if err != nil {
-		log.Fatal(err)
-	}
 }
