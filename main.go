@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/ThinCrunch/crunchy-streams/internal/commands"
 	"github.com/ThinCrunch/crunchy-streams/internal/config"
@@ -19,6 +20,11 @@ func printHelp() {
 
 func main() {
 	cfg := config.Load()
+	if !cfg.ValidateConfig() {
+		fmt.Println("Invalid configuration or arguments. Check the errors for details.")
+		os.Exit(1)
+	}
+
 	requestService := requests.NewService(*cfg.TwitchSecrets)
 	commandService := commands.NewCommandService(*requestService, *cfg.CliOptions, *cfg.FileOptions)
 

@@ -39,3 +39,18 @@ func AskForString(prompt string) string {
 
 	return result
 }
+
+func FileInDirectory(fileName string, path string) (bool, error) {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		return false, err
+	}
+
+	for _, file := range files {
+		if file.Name() == fileName {
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
